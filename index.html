@@ -312,10 +312,24 @@
           <p><i class="fas fa-phone"></i> 214‑517‑7707</p>
           <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/malav-dalal" target="_blank" rel="noopener">linkedin.com/in/malav-dalal</a></p>
         </div>
-        <form id="contact-form" class="contact-form">
+        <form
+          action="https://formspree.io/f/mbdrggnd"
+          method="POST"
+          class="contact-form"
+          id="contact-form"
+        >
+          <!-- Honeypot (anti-spam) -->
+          <input type="text" name="_gotcha" style="display:none" autocomplete="off" />
+
+          <!-- Subject line -->
+          <input type="hidden" name="_subject" value="Contact from malavdalal.com" />
+
+          <!-- Redirect to a thank-you page -->
+          <input type="hidden" name="_next" value="https://malavd.github.io/portfolio/thank-you.html" />
+
           <div class="field-row">
             <input type="text" name="name" placeholder="Your name" required />
-            <input type="email" name="email" placeholder="Your email" required />
+            <input type="email" name="_replyto" placeholder="Your email" required />
           </div>
           <textarea name="message" rows="5" placeholder="Tell me about your project, role, or idea…" required></textarea>
           <button type="submit" class="btn primary">Send message</button>
