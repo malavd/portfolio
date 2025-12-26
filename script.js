@@ -1,4 +1,4 @@
-// Modern Portfolio - Enhanced JavaScript
+// Modern Portfolio - Enhanced JavaScript with Performance Optimizations
 
 document.addEventListener("DOMContentLoaded", () => {
   const navToggle = document.getElementById("nav-toggle");
@@ -51,7 +51,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  window.addEventListener("scroll", highlightNav);
+  // OPTIMIZATION 3.B: Throttled scroll event with requestAnimationFrame
+  let scrollTimeout;
+  window.addEventListener("scroll", () => {
+    if (scrollTimeout) {
+      window.cancelAnimationFrame(scrollTimeout);
+    }
+    scrollTimeout = window.requestAnimationFrame(() => {
+      highlightNav();
+    });
+  });
 
   // Smooth scroll with offset
   navLinks.forEach(link => {
@@ -109,17 +118,25 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(el);
   });
 
-  // Parallax effect for gradient orbs
+  // OPTIMIZATION 3.C: Throttled parallax effect for gradient orbs (~60fps)
+  let mouseMoveTimeout = null;
+  const orbs = document.querySelectorAll(".gradient-orb");
+  
   window.addEventListener("mousemove", (e) => {
-    const orbs = document.querySelectorAll(".gradient-orb");
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
+    if (mouseMoveTimeout) return;
+    
+    mouseMoveTimeout = setTimeout(() => {
+      const mouseX = e.clientX / window.innerWidth;
+      const mouseY = e.clientY / window.innerHeight;
 
-    orbs.forEach((orb, index) => {
-      const speed = (index + 1) * 20;
-      const x = (mouseX - 0.5) * speed;
-      const y = (mouseY - 0.5) * speed;
-      orb.style.transform = `translate(${x}px, ${y}px)`;
-    });
+      orbs.forEach((orb, index) => {
+        const speed = (index + 1) * 20;
+        const x = (mouseX - 0.5) * speed;
+        const y = (mouseY - 0.5) * speed;
+        orb.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      
+      mouseMoveTimeout = null;
+    }, 16); // Approximately 60fps (1000ms / 60 = ~16ms)
   });
 });
