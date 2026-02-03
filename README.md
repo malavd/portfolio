@@ -103,3 +103,59 @@ Open source - feel free to fork and customize for your own use.
 ***
 
 **Last Updated:** December 2025
+
+
+***
+
+**BLOG**
+portfolio/
+├── index.html                           # Main portfolio
+├── style.css
+├── script.js
+├── assets/
+│   └── MalavDalal_R2.pdf
+├── images/                              # Portfolio images
+│   └── image8.jpeg
+│
+└── blog/                                # Blog root
+    ├── index.html                       # Blog homepage (post list)
+    ├── _config.yml                      # Jekyll config
+    │
+    ├── _posts/                          # Blog posts (Markdown)
+    │   ├── 2026-02-02-iso21434-guide.md
+    │   ├── 2026-02-05-tara-methodology.md
+    │   └── 2026-02-10-unece-r155.md
+    │
+    ├── _layouts/                        # Templates
+    │   ├── default.html                 # Base layout
+    │   ├── post.html                    # Blog post layout
+    │   └── blog-home.html               # Blog index layout
+    │
+    ├── _includes/                       # Reusable components
+    │   ├── header.html
+    │   ├── footer.html
+    │   └── navigation.html
+    │
+    ├── assets/                          # Blog-specific assets
+    │   ├── css/
+    │   │   ├── blog.css
+    │   │   └── syntax-highlighting.css
+    │   └── js/
+    │       └── blog.js
+    │
+    └── media/                           # Media files for blog
+        ├── images/
+        │   ├── 2026-02/
+        │   │   ├── iso21434-lifecycle.png
+        │   │   ├── tara-process.jpg
+        │   │   └── cybersecurity-arch.png
+        │   └── 2026-01/
+        │       └── autonomous-safety.jpg
+        │
+        └── videos/
+            ├── 2026-02/
+            │   ├── ota-demo.mp4
+            │   └── fmea-walkthrough.mp4
+            └── thumbnails/
+                ├── ota-demo-thumb.jpg
+                └── fmea-thumb.jpg

@@ -1,0 +1,50 @@
+---
+layout: default
+---
+<article class="blog-post">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <div class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        <i class="far fa-calendar"></i> {{ page.date | date: "%B %d, %Y" }}
+      </time>
+      {% if page.author %}
+        <span class="author"><i class="fas fa-user"></i> {{ page.author }}</span>
+      {% endif %}
+      {% if page.read_time %}
+        <span class="read-time"><i class="far fa-clock"></i> {{ page.read_time }} min read</span>
+      {% endif %}
+    </div>
+    {% if page.categories %}
+      <div class="post-categories">
+        {% for category in page.categories %}
+          <span class="category-tag">{{ category }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  <footer class="post-footer">
+    <div class="post-navigation">
+      <a href="{{ '/blog' | relative_url }}" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Back to Blog
+      </a>
+      <a href="{{ '/' | relative_url }}" class="btn-portfolio">
+        <i class="fas fa-home"></i> Portfolio
+      </a>
+    </div>
+    
+    {% if page.tags %}
+      <div class="post-tags">
+        <strong>Tags:</strong>
+        {% for tag in page.tags %}
+          <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </footer>
+</article>

@@ -1,0 +1,42 @@
+# Blog Settings
+title: "Malav Dalal - Engineering Blog"
+description: "Automotive Functional Safety, Cybersecurity, and Autonomous Systems"
+author: "Malav Dalal"
+email: "malavdalal@yahoo.com"
+baseurl: "/portfolio/blog"
+url: "https://malavd.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+
+# Kramdown settings for better code blocks
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:year/:month/:day/:title/
+
+# Pagination
+paginate: 10
+paginate_path: "/page:num/"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap

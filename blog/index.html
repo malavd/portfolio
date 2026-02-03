@@ -1,0 +1,46 @@
+---
+layout: default
+title: Engineering Blog
+---
+
+<div class="blog-home">
+  <div class="blog-hero">
+    <h1>Engineering Insights</h1>
+    <p>Automotive Functional Safety, Cybersecurity, and Autonomous Systems</p>
+  </div>
+
+  <div class="posts-list">
+    {% for post in site.posts %}
+      <article class="post-preview">
+        {% if post.featured_image %}
+          <div class="post-thumbnail">
+            <img src="{{ post.featured_image | relative_url }}" alt="{{ post.title }}">
+          </div>
+        {% endif %}
+        
+        <div class="post-preview-content">
+          <h2>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h2>
+          
+          <div class="post-meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">
+              {{ post.date | date: "%B %d, %Y" }}
+            </time>
+            {% if post.read_time %}
+              <span>• {{ post.read_time }} min read</span>
+            {% endif %}
+          </div>
+          
+          <p class="post-excerpt">
+            {{ post.excerpt | strip_html | truncate: 200 }}
+          </p>
+          
+          <a href="{{ post.url | relative_url }}" class="read-more">
+            Read more <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</div>
