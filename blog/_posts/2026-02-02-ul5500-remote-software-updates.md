@@ -1,14 +1,8 @@
 ---
 layout: post
-title: "UL 5500: Essential Guide to Remote Software Update Safety"
-date: 2026-02-02
-author: Malav Dalal
-categories: [standards, cybersecurity, OTA]
-tags: [UL5500, remote-updates, OTA, firmware-safety, connected-vehicles]
-read_time: 10
-featured_image: /blog/media/images/2026-02/ul5500-overview.png
-excerpt: "Understanding UL 5500 standard for remote software updates in automotive and IoT systems—covering safety requirements, validation processes, and integration with ISO 26262 and ISO 21434."
+title: UL 5500 – Remote Software Updates
 ---
+
 
 ## Introduction
 

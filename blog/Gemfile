@@ -1,8 +1,14 @@
 source "https://rubygems.org"
 
-# Use GitHub Pages gem (same as what GitHub uses)
-gem "github-pages", "~> 228", group: :jekyll_plugins
+ruby "~> 3.2"
 
-# Required for Ruby 3.0+
-gem "webrick", "~> 1.8"
+gem "jekyll", "~> 4.3"
 
+# Force a newer eventmachine that works on ARM/Ruby 3.2
+gem "eventmachine", "~> 1.2", ">= 1.2.8"
+
+group :jekyll_plugins do
+  gem "jekyll-feed"
+  gem "jekyll-seo-tag"
+  gem "jekyll-sitemap"
+end
