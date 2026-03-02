@@ -62,7 +62,7 @@
 <li>Powertrain control units and battery management systems</li>
 </ul>
 <h2 id="why-ul-5500-matters-for-automotive-engineers">Why UL 5500 Matters for Automotive Engineers</h2>
-<p>In my work implementing over-the-air (OTA) update systems at Rivian and Polaris, UL 5500 provides critical guidance for ensuring firmware updates don&#39;t compromise vehicle safety.</p>
+<p>In my work implementing over-the-air (OTA) update systems at Rivian, UL 5500 provides critical guidance for ensuring firmware updates don&#39;t compromise vehicle safety.</p>
 <h3 id="real-world-risks-without-proper-standards">Real-World Risks Without Proper Standards</h3>
 <p><strong>Update failures can lead to:</strong></p>
 <ol>
@@ -116,35 +116,37 @@
 <li><strong>Session integrity</strong> throughout the update process</li>
 </ul>
 <p><strong>Example implementation:</strong></p>
-<p>```c
-// Secure connection establishment for OTA
+<<pre><code class="language-c">// Secure connection establishment for OTA
 typedef struct {
     uint8_t server_certificate;
     uint8_t device_certificate;
     uint8_t session_key;
     bool is_authenticated;
-} OTA_SecureConnection;</p>
-<p>bool establish_secure_connection(OTA_SecureConnection *conn) {
+} OTA_SecureConnection;
+
+bool establish_secure_connection(OTA_SecureConnection *conn) {
     // Verify server certificate
-    if (!verify_certificate(conn-&gt;server_certificate, trusted_ca)) {
-        log_error(&quot;Server certificate verification failed&quot;);
+    if (!verify_certificate(conn->server_certificate, trusted_ca)) {
+        log_error("Server certificate verification failed");
         return false;
-    }</p>
-<pre><code><span class="hljs-comment">// Perform mutual TLS handshake</span>
-<span class="hljs-keyword">if</span> (!perform_tls_handshake(conn)) {
-    log_error(<span class="hljs-string">"TLS handshake failed"</span>);
-    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-}
+    }
 
-<span class="hljs-comment">// Generate and exchange session keys</span>
-<span class="hljs-keyword">if</span> (!establish_session_key(conn)) {
-    log_error(<span class="hljs-string">"Session key establishment failed"</span>);
-    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-}
+    // Perform mutual TLS handshake
+    if (!perform_tls_handshake(conn)) {
+        log_error("TLS handshake failed");
+        return false;
+    }
 
-conn-&gt;is_authenticated = <span class="hljs-literal">true</span>;
-<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-</code></pre><p>}</p>
+    // Generate and exchange session keys
+    if (!establish_session_key(conn)) {
+        log_error("Session key establishment failed");
+        return false;
+    }
+
+    conn->is_authenticated = true;
+    return true;
+}
+</code></pre>
 
       </div>
 
