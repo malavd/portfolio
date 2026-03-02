@@ -62,22 +62,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Smooth scroll with offset
-  navLinks.forEach(link => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute("href");
-      const targetSection = document.querySelector(targetId);
-      
-      if (targetSection) {
-        const offsetTop = targetSection.offsetTop - 80;
-        window.scrollTo({
-          top: offsetTop,
-          behavior: "smooth"
-        });
-      }
-    });
+  /// Smooth scroll with offset
+navLinks.forEach(link => {
+  link.addEventListener("click", (e) => {
+    const targetId = link.getAttribute("href");
+
+    // If the link is an external page (not a #anchor), let it navigate normally
+    if (!targetId.startsWith("#")) {
+      return;  // do NOT preventDefault — let browser follow the link
+    }
+
+    e.preventDefault();
+    const targetSection = document.querySelector(targetId);
+
+    if (targetSection) {
+      const offsetTop = targetSection.offsetTop - 80;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth"
+      });
+    }
   });
+});
+
 
   // Contact form handling
   if (form && status) {
