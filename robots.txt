@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://malavd.github.io/portfolio/blog/sitemap.xml
