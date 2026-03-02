@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UL 5500 – Remote Software Updates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UL 5500 remote software update considerations for autonomous and robotic systems.">
+  <link rel="stylesheet" href="assets/css/blog.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header class="blog-header">
+    <nav class="blog-nav">
+      <div class="nav-brand">
+        <a href="../index.html">
+          <span class="logo">MD</span>
+          <span class="brand-text">Malav Dalal</span>
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="../index.html">Portfolio</a>
+        <a href="index.html" class="active">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="blog-content">
+    <article class="blog-post">
+      <header class="post-header">
+        <h1 class="post-title">UL 5500 – Remote Software Updates</h1>
+        <div class="post-meta">
+          <span><i class="far fa-calendar"></i> February 2, 2026</span>
+          <span><i class="far fa-clock"></i> 8 min read</span>
+        </div>
+      </header>
+
+      <div class="post-content">
+        <!-- Paste your article content here, converted from Markdown to HTML -->
+        <h2 id="introduction">Introduction</h2>
+<p>As connected vehicles and IoT devices proliferate, the ability to update software remotely has become essential for fixing bugs, adding features, and patching security vulnerabilities. However, remote software updates introduce unique safety and security risks. <strong>UL 5500</strong> addresses these challenges by establishing comprehensive requirements for safe remote software update processes.</p>
+<p><img src="{{ &#39;/media/images/2026-02/ul5500-overview.png&#39; | relative_url }}" alt="UL 5500 Overview">
+<em>Figure 1: UL 5500 Remote Software Update Framework</em></p>
+<h2 id="what-is-ul-5500-">What is UL 5500?</h2>
+<p><strong>UL 5500: Standard for Remote Software Updates</strong> is a safety standard developed by Underwriters Laboratories that covers remote software updates while taking into account manufacturers&#39; recommended processes. Published in September 2018, this standard is limited to software elements having an influence on safety.</p>
+<h3 id="key-scope-and-purpose">Key Scope and Purpose</h3>
+<p>UL 5500 addresses:</p>
+<ul>
+<li><strong>Remote connection establishment</strong> between host and device</li>
+<li><strong>Authentication mechanisms</strong> for secure updates</li>
+<li><strong>Software integrity verification</strong> during transmission and installation</li>
+<li><strong>Hardware compatibility</strong> necessary for safe remote software updates</li>
+<li><strong>Rollback and recovery</strong> procedures in case of update failures</li>
+<li><strong>Safety-critical software</strong> update validation</li>
+</ul>
+<p>The standard is particularly relevant for:</p>
+<ul>
+<li>Automotive systems (ECUs, infotainment, ADAS)</li>
+<li>Industrial IoT devices</li>
+<li>Medical devices with remote connectivity</li>
+<li>Consumer electronics with safety implications</li>
+<li>Powertrain control units and battery management systems</li>
+</ul>
+<h2 id="why-ul-5500-matters-for-automotive-engineers">Why UL 5500 Matters for Automotive Engineers</h2>
+<p>In my work implementing over-the-air (OTA) update systems at Rivian and Polaris, UL 5500 provides critical guidance for ensuring firmware updates don&#39;t compromise vehicle safety.</p>
+<h3 id="real-world-risks-without-proper-standards">Real-World Risks Without Proper Standards</h3>
+<p><strong>Update failures can lead to:</strong></p>
+<ol>
+<li><strong>Bricked ECUs</strong>: Incomplete updates rendering control units inoperable</li>
+<li><strong>Version mismatches</strong>: Incompatible software combinations across networked ECUs</li>
+<li><strong>Security vulnerabilities</strong>: Unencrypted or unauthenticated update channels</li>
+<li><strong>Safety degradation</strong>: Updates that inadvertently disable safety features</li>
+<li><strong>Communication failures</strong>: Lost connectivity during critical safety operations</li>
+</ol>
+<h3 id="integration-with-iso-standards">Integration with ISO Standards</h3>
+<p>UL 5500 complements existing automotive safety and cybersecurity standards:</p>
+<table>
+<thead>
+<tr>
+<th>Standard</th>
+<th>Focus Area</th>
+<th>Relationship to UL 5500</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ISO 26262</strong></td>
+<td>Functional Safety</td>
+<td>Ensures updated software maintains ASIL requirements</td>
+</tr>
+<tr>
+<td><strong>ISO 21434</strong></td>
+<td>Cybersecurity</td>
+<td>Addresses authentication, encryption, and threat mitigation</td>
+</tr>
+<tr>
+<td><strong>UNECE R155</strong></td>
+<td>Cybersecurity Type Approval</td>
+<td>Requires robust software update management systems</td>
+</tr>
+<tr>
+<td><strong>UNECE R156</strong></td>
+<td>Software Update Management</td>
+<td>Mandates processes for safe OTA updates</td>
+</tr>
+</tbody>
+</table>
+<p>UL 5500 provides implementation-level requirements that support compliance with these higher-level standards.</p>
+<h2 id="core-requirements-of-ul-5500">Core Requirements of UL 5500</h2>
+<h3 id="1-secure-connection-establishment">1. Secure Connection Establishment</h3>
+<p>The standard requires:</p>
+<ul>
+<li><strong>Mutual authentication</strong> between update server and device</li>
+<li><strong>Encrypted communication channels</strong> (TLS 1.2 or higher)</li>
+<li><strong>Certificate-based verification</strong> of update source legitimacy</li>
+<li><strong>Session integrity</strong> throughout the update process</li>
+</ul>
+<p><strong>Example implementation:</strong></p>
+<p>```c
+// Secure connection establishment for OTA
+typedef struct {
+    uint8_t server_certificate;
+    uint8_t device_certificate;
+    uint8_t session_key;
+    bool is_authenticated;
+} OTA_SecureConnection;</p>
+<p>bool establish_secure_connection(OTA_SecureConnection *conn) {
+    // Verify server certificate
+    if (!verify_certificate(conn-&gt;server_certificate, trusted_ca)) {
+        log_error(&quot;Server certificate verification failed&quot;);
+        return false;
+    }</p>
+<pre><code><span class="hljs-comment">// Perform mutual TLS handshake</span>
+<span class="hljs-keyword">if</span> (!perform_tls_handshake(conn)) {
+    log_error(<span class="hljs-string">"TLS handshake failed"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+
+<span class="hljs-comment">// Generate and exchange session keys</span>
+<span class="hljs-keyword">if</span> (!establish_session_key(conn)) {
+    log_error(<span class="hljs-string">"Session key establishment failed"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+
+conn-&gt;is_authenticated = <span class="hljs-literal">true</span>;
+<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+</code></pre><p>}</p>
+
+      </div>
+
+      <footer class="post-footer">
+        <div class="post-navigation">
+          <a href="index.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Blog
+          </a>
+          <a href="../index.html" class="btn-portfolio">
+            <i class="fas fa-home"></i> Back to Portfolio
+          </a>
+        </div>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="blog-footer">
+    <div class="footer-content">
+      <p>&copy; 2026 Malav Dalal · Systems & Functional Safety Engineer</p>
+      <div class="social-links">
+        <a href="mailto:malavdalal@yahoo.com"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/malav-dalal" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/malavd" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
