@@ -67,16 +67,16 @@ navLinks.forEach(link => {
   link.addEventListener("click", (e) => {
     const targetId = link.getAttribute("href");
 
-    // If the link is an external page (not a #anchor), let it navigate normally
     if (!targetId.startsWith("#")) {
-      return;  // do NOT preventDefault — let browser follow the link
+      return;
     }
 
     e.preventDefault();
     const targetSection = document.querySelector(targetId);
+    const header = document.querySelector(".site-header");
 
-    if (targetSection) {
-      const offsetTop = targetSection.offsetTop - 80;
+    if (targetSection && header) {
+      const offsetTop = targetSection.offsetTop - header.offsetHeight - 12;
       window.scrollTo({
         top: offsetTop,
         behavior: "smooth"
@@ -84,19 +84,6 @@ navLinks.forEach(link => {
     }
   });
 });
-
-
-  // Contact form handling
-  if (form && status) {
-    form.addEventListener("submit", (e) => {
-      status.textContent = "Sending your message...";
-      status.style.color = "#4f9dff";
-
-      setTimeout(() => {
-        status.textContent = "";
-      }, 5000);
-    });
-  }
 
   // Intersection Observer for fade-in animations
   const observerOptions = {
