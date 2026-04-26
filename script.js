@@ -147,3 +147,39 @@ navLinks.forEach(link => {
     }, 16); // Approximately 60fps (1000ms / 60 = ~16ms)
   });
 });
+
+// ── Scroll Spy: highlight active nav link ──────────────────────────────────
+(function () {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  function onScroll() {
+    // How far below the sticky header top should a section be considered "active"
+    const offset = document.querySelector('.site-header').offsetHeight + 16;
+    let current = '';
+
+    sections.forEach((section) => {
+      const sectionTop = section.getBoundingClientRect().top;
+      if (sectionTop <= offset) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach((link) => {
+      link.classList.remove('active');
+      // Match href like "#intro" against current section id
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // run once on load
+})();
+
+// ── Header shrink on scroll ─────────────────────────────────────────────────
+const header = document.querySelector('.site-header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });

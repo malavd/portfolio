@@ -1113,3 +1113,10 @@ img {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.site-header.scrolled {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.6);
+  transition: padding 0.3s ease, box-shadow 0.3s ease;
+}
